@@ -22,9 +22,17 @@ router.get('/', authorize, (request, response) => {
 
 });
 
-router.post('/', authorize,  (request, response) => {
+router.post('/', authorize, (request, response) => {
 
-    // Endpoint to create a new post
+    if (request.body.text == null){
+        response.status(400);
+        response.send("Someting went wrong");
+    }else{
+        request.body.userId = request.currentUser.id;
+        PostModel.create(request.body, ()=>{})
+        response.send("Post saved");
+    }
+
 
 });
 
