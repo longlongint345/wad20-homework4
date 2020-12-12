@@ -1,5 +1,6 @@
 import {mount, createLocalVue} from '@vue/test-utils'
 import Vuex from 'vuex'
+import moment from 'moment'
 import VueRouter from 'vue-router'
 import Posts from "../../src/components/Posts.vue";
 
@@ -100,7 +101,50 @@ describe('Posts', () => {
 
     const wrapper = mount(Posts, {router, store, localVue});
 
-    it('1 == 1', function () {
-        expect(true).toBe(true)
+    it('Correct number of posts in rendered', function () {
+        let nrOfPosts = testData.length;
+        let nrOfRenderedPosts = wrapper.findAll('div.post').length;
+        expect(nrOfRenderedPosts).toEqual(nrOfPosts);
+
+    });
+
+    it('Correct tags are rendered for media type image', function (){
+        let posts = wrapper.findAll('div.post');
+
+        let imagePost = posts.at(0); // post with image media
+        // post-image tag exists
+        expect(imagePost.find('div.post-image').exists()).toBe(true)
+
+        // the tag contains an image tag and does not contain a video tag
+        let postVisualContent = imagePost.find('div.post-image');
+        expect(postVisualContent.find('img').exists()).toBe(true)
+        expect(postVisualContent.find('video').exists()).toBe(false)
+    });
+
+    it('Correct tags are rendered for media type null', function (){
+        let posts = wrapper.findAll('div.post');
+        let nullMediaPost = posts.at(1);
+        // post-image tag does not exist
+        expect(nullMediaPost.find('div.post-image').exists()).toBe(false);
+    });
+
+    it('Correct tags are rendered for media type video', function (){
+        let posts = wrapper.findAll('div.post');
+        let videoPost = posts.at(2);
+        // post-image tag exists
+        expect(videoPost.find('div.post-image').exists()).toBe(true);
+
+        // the tag contains a video tag and does not contain an image tag
+        let postVisualContent = videoPost.find('div.post-image');
+        expect(postVisualContent.find('video').exists()).toBe(true);
+        expect(postVisualContent.find('img').exists()).toBe(false);
+    })
+
+    it('Post create time is displayed in correct format', function (){
+        let posts = wrapper.findAll('div.post');
+        for (let i = 0; i < posts.length; i++){
+            let timeTag = posts.at(i).find('span.post-author > small');
+            expect(timeTag.text()).toEqual(moment(testData[i].createTime).format('LLLL'));
+        }
     });
 });
