@@ -135,8 +135,8 @@
 
     .post .post-image img, video {
         width: 100%;
-        min-height: 150px;
-        max-height: 350px;
+        /*min-height: 150px;
+        max-height: 350px;*/
         object-fit: cover;
         object-position: top center;
     }
