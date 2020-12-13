@@ -1,5 +1,7 @@
 # PostIt App
 
+Authors: Tarvi Tepandi (ttepandi), Andre Anijärv (longlongint345)
+
 ### Using Vue.js frontend and Node.js/Express backend
 ## Setup
 

@@ -26,11 +26,14 @@ router.post('/', authorize, (request, response) => {
 
     if (request.body.text == null){
         response.status(400);
-        response.send("Someting went wrong");
+        response.send("Something went wrong");
     }else{
         request.body.userId = request.currentUser.id;
-        PostModel.create(request.body, ()=>{})
-        response.send("Post saved");
+        PostModel.create(request.body, ()=>{
+            response.status(200);
+            response.send("Post saved");
+        });
+
     }
 
 

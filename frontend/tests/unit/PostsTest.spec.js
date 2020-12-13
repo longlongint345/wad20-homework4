@@ -101,7 +101,7 @@ describe('Posts', () => {
 
     const wrapper = mount(Posts, {router, store, localVue});
 
-    it('Correct number of posts in rendered', function () {
+    it('Correct number of posts is rendered', function () {
         let nrOfPosts = testData.length;
         let nrOfRenderedPosts = wrapper.findAll('div.post').length;
         expect(nrOfRenderedPosts).toEqual(nrOfPosts);
